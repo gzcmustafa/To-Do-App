@@ -16,9 +16,23 @@
                     <div class="card-header">
                         Todo App
                     </div>
+                    <div class="card-body">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" name="txtTaskName" id="txtTaskName" class="form-control">
+                                <button type="submit" class="btn btn-primary" id="btnAddNewTask">Ekle</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
+
                 <div class="card mt-3">
+                    <div class="card-header">
+                        <button class="btn btn-danger btn-sm float-end">Temizle</button>
+                    </div>
+
+
                     <ul id="task-list" class="list-group list-group-flush">
                       
 
@@ -38,7 +52,12 @@
             {id:4, gorevAdi:"Görev 4"}
 
         ]
-        ul= document.getElementById("task-list")
+
+        displayTask();
+
+        function displayTask(){
+            ul= document.getElementById("task-list")
+            ul.innerHTML = ""
 
         for (let gorev of gorevListesi){
          let li = `
@@ -51,6 +70,34 @@
         `;
         ul.insertAdjacentHTML("beforeend",li)
 
+        }
+    }
+        
+
+        document.querySelector('#btnAddNewTask').addEventListener('click',newTask)
+        document.querySelector('#btnAddNewTask').addEventListener("keypress",function(){
+            if (event.key == "Enter"){
+                document.getElementById("btnAddNewTask").click();
+            }
+        })
+
+
+
+        function newTask(event){
+
+            let taskInput = document.querySelector("#txtTaskName");
+
+            if(taskInput.value == ""){
+                alert("görev girmelisiniz")
+            }else{
+                gorevListesi.push({id:gorevListesi.length +1 , gorevAdi:taskInput.value})
+                taskInput.value= ""
+            displayTask();
+            }
+
+            
+
+            event.preventDefault();
         }
 
         
